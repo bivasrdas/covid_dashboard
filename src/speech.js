@@ -66,7 +66,7 @@ componentDidUpdate()
     getDialog(mes)
     {
         console.log(mes,"alt")
-        axios.post("http://localhost:4000/chat",{
+        axios.post("https://covid-dash-nlp.herokuapp.com/chat",{
             message:mes
         })
         .then(res=>
