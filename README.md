@@ -1,3 +1,9 @@
+This project is similar to Covid-19 Dashboard which provides details of only states of India.
+We can simply search for any state details by voice search.
+
+This project is deployed at https://covid-dashboard-voice.herokuapp.com/
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
