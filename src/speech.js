@@ -86,7 +86,7 @@ componentDidUpdate()
     {
         function multivalue_filter(values){
             return function(v){
-                return values.indexOf(v)!= -1;
+                return values.indexOf(v)!== -1;
             }
         }
         //var filterpoints=this.state.dialog;
@@ -97,8 +97,8 @@ componentDidUpdate()
         var d=this.state.data.statewise;
         var fdata=[]
         console.log(d.length)
-        if(d.length!=0)
-            d.map(d=>{if(d.state!='Total')
+        if(d.length!==0)
+            d.map(d=>{if(d.state!=='Total')
             fdata.push(d)}
             )
         console.log(fdata);
@@ -120,10 +120,10 @@ componentDidUpdate()
         document.getElementById("active").innerHTML=active.value();
         console.log(filterpoints.length,"Filter points lenght");
         console.log(filterpoints)
-        if(filterpoints!="")
+        if(filterpoints!=="")
         {
             state2.filterFunction(multivalue_filter(filterpoints));
-            if(filterpoints=="India")
+            if(filterpoints==="India")
             state2.filterAll()
             console.log(data1.allFiltered());
             console.log(confirmed.value(),"filtered value");
