@@ -1,0 +1,22 @@
+.bodytotal{
+    background-color:#161625;
+    width: 99%  ;
+}
+html,body{
+    height: 100%;
+}
+.name{
+font-stretch: expanded;
+
+}
+.interact
+{
+    font-size: 20px;
+    height: 40px;
+    width: 200px;
+    border-radius: 30px;
+    border-color: brown;
+    border-width: 5px;
+    background-color: white;
+    
+}
