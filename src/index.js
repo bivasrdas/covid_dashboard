@@ -4,13 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Speech from './speech'
-import runSample from './api'
+
 
 ReactDOM.render(
   <React.StrictMode>
     {/*<App />*/}
     <Speech/>
-    <runSample/>
   </React.StrictMode>,
   document.getElementById('root')
 );
