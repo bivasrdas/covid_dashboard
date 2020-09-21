@@ -15,7 +15,7 @@ class Speech extends React.Component
     {
         super(props);
         this.state={dialog:"India",
-            nlpcontent:'Activate',
+            nlpcontent:'Press mic and specify any state of India. eg:Delhi',
             data:{}
         };
         
@@ -51,17 +51,17 @@ componentDidUpdate()
         recognition.start()
         recognition.onstart=()=>{console.log("Voice activated");document.getElementById("voicebd").style.background="orange";}
         recognition.onresult=(e)=>{
-        //console.log("voice start",e)
+        console.log("voice start",e)
         let current=e.resultIndex;
         //document.getElementById("interm").innerHTML=e.results[current][0].transcript;
         transcript=e.results[current][0].transcript;
         this.setState({nlpcontent:transcript})
         //console.log(transcript);
-        this.getDialog(transcript);
-        recognition.onend=()=>{console.log("Voice Deactivated");document.getElementById("voicebd").style.background="white";}
+        recognition.onend=()=>{console.log("Voice Deactivated");document.getElementById("voicebd").style.background="white";this.getDialog(transcript);}
         recognition.onerror=event=>{console.log(event.error)}
         }
         //console.log(transcript,"final transhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        
     }
     getDialog(mes)
     {
@@ -147,8 +147,11 @@ componentDidUpdate()
     
     
     <div style={{color:"white",textAlign:"center",fontSize:"40px"}}>COVID DASHBOARD</div>
-    <span style={{display:"flex"}}><div className="name" style={{color:"white",paddingLeft:"10%", fontSize:"50px",fontWeight:"500",fontStretch:"ex",width:"500px"}}>{this.state.dialog}</div>
-    <div style={{float:"right",position:"absolute",right:"0"}}><Button id="voiceb" onClick={this.voiceCommands}><div id="voicebd"styles={{ backgroundColor:"white"}} className="interact" >activate</div></Button></div></span>
+    <br></br>
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><div style={{backgroundColor:"white",color:"black",borderRadius:"30px",width:"60%",fontSize:"50px",textAlign:"center",alignItems:"center"}}>{this.state.nlpcontent}</div></div>
+    <br></br>
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><Button id="voiceb" onClick={this.voiceCommands}><div id="voicebd"styles={{ backgroundColor:"white"}} className="interact" >Voice activate</div></Button></div>
+    <div className="name" style={{color:"white",paddingLeft:"10%", fontSize:"50px",fontWeight:"500"}}>{this.state.dialog}</div>
     <Grid  container spacing={2} style={{paddingTop:"40px"}}>
           <Grid item xs={3}>
           <div style={{textAlign:"center",color:"red",fontSize: '2.0vw'}}>Confirmed Cases<div style={{
@@ -158,7 +161,7 @@ componentDidUpdate()
         </Grid>
         <Grid item xs={3}>
           <div style={{textAlign:"center",color:"blue",fontSize: '2.0vw'}} >Active Cases<div style={{
-    fontSize: '2.7vw',
+    fontSize: '2.7vw',  
     fontWeight:"400",marginTop:"10px"}}><div id="active"></div></div></div>
         </Grid>
         <Grid item xs={3}>
@@ -173,7 +176,7 @@ componentDidUpdate()
         </Grid>
         </Grid>
         {/*<h2 id="interm"></h2>*/}
-        <h1 styles={{ color:"white" }}>{this.state.nlpcontent}</h1>
+        
         </div>)
 
     }
