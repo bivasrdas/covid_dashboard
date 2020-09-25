@@ -170,9 +170,9 @@ componentDidUpdate()
     fontWeight:"400",marginTop:"10px"}}><div id="recovered"></div></div></div>
         </Grid>
         <Grid item xs={3}>
-          <Paper className="card"><div style={{textAlign:"center",color:"grey",backgroundColor:"#161625",height:"100%",fontSize: '2.0vw'}}>Deaths<div style={{
+          <div style={{textAlign:"center",color:"grey",backgroundColor:"#161625",height:"100%",fontSize: '2.0vw'}}>Deaths<div style={{
     fontSize: '2.7vw',
-    fontWeight:"400",marginTop:"10px"}}><div id="deaths"></div></div></div></Paper>
+    fontWeight:"400",marginTop:"10px"}}><div id="deaths"></div></div></div>
         </Grid>
         </Grid>
         {/*<h2 id="interm"></h2>*/}

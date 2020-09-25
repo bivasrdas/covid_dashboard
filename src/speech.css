@@ -1,9 +1,11 @@
 .bodytotal{
     background-color:#161625;
-    width: 99%  ;
+    width: 100%  ;
 }
-html,body{
+html,body,#app,#app>div{
     height: 100%;
+    background-color:#161625;
+    width: 100%;
 }
 .name{
 font-stretch: expanded;
