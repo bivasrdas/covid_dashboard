@@ -4,7 +4,7 @@ import './speech.css'
 import crossfilter from 'crossfilter2';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import MicIcon from '@material-ui/icons/Mic';
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
@@ -15,7 +15,7 @@ class Speech extends React.Component
     {
         super(props);
         this.state={dialog:"India",
-            nlpcontent:'Press mic and specify any state of India. eg:Delhi',
+            nlpcontent:'eg:Delhi',
             data:{}
         };
         
@@ -42,14 +42,13 @@ class Speech extends React.Component
 componentDidUpdate()
 {
     this.crossdata();
-}
-    
+}    
     
     voiceCommands()
     {
         var transcript;
         recognition.start()
-        recognition.onstart=()=>{console.log("Voice activated");document.getElementById("voicebd").style.background="orange";}
+        recognition.onstart=()=>{console.log("Voice activated");document.getElementById("hidden").style.display="block";}
         recognition.onresult=(e)=>{
         console.log("voice start",e)
         let current=e.resultIndex;
@@ -57,7 +56,7 @@ componentDidUpdate()
         transcript=e.results[current][0].transcript;
         this.setState({nlpcontent:transcript})
         //console.log(transcript);
-        recognition.onend=()=>{console.log("Voice Deactivated");document.getElementById("voicebd").style.background="white";this.getDialog(transcript);}
+        recognition.onend=()=>{console.log("Voice Deactivated");this.getDialog(transcript);document.getElementById("hidden").style.display="none";}
         recognition.onerror=event=>{console.log(event.error)}
         }
         //console.log(transcript,"final transhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
@@ -148,9 +147,9 @@ componentDidUpdate()
     
     <div style={{color:"white",textAlign:"center",fontSize:"40px"}}>COVID DASHBOARD</div>
     <br></br>
-    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><div style={{backgroundColor:"white",color:"black",borderRadius:"30px",width:"60%",fontSize:"50px",textAlign:"center",alignItems:"center"}}>{this.state.nlpcontent}</div></div>
+    {/*<div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><div style={{backgroundColor:"white",color:"black",borderRadius:"30px",width:"60%",fontSize:"50px",textAlign:"center",alignItems:"center"}}>{this.state.nlpcontent}</div></div>*/}
     <br></br>
-    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><Button id="voiceb" onClick={this.voiceCommands}><div id="voicebd"styles={{ backgroundColor:"white"}} className="interact" >Voice activate</div></Button></div>
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}><Button id="voiceb" onClick={this.voiceCommands}><div id="voicebd"styles={{ backgroundColor:"white"}} className="interact" ><MicIcon fontSize='large'></MicIcon></div></Button></div>
     <div className="name" style={{color:"white",paddingLeft:"10%", fontSize:"50px",fontWeight:"500"}}>{this.state.dialog}</div>
     <Grid  container spacing={2} style={{paddingTop:"40px"}}>
           <Grid item xs={3}>
@@ -176,7 +175,7 @@ componentDidUpdate()
         </Grid>
         </Grid>
         {/*<h2 id="interm"></h2>*/}
-        
+        <div id="hidden" style={{display:"none",backgroundColor:'#000000f0',color:"white",position:'absolute',top:'0',height:"100%",width:"100%"}}><div style={{fontSize:'60px',textAlign:'center',display:"flex",justifyContent:"center",marginTop:"300px",}}>{this.state.nlpcontent}</div></div>
         </div>)
 
     }
