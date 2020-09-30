@@ -5,6 +5,7 @@ import crossfilter from 'crossfilter2';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import MicIcon from '@material-ui/icons/Mic';
+const logo=require('./mic11.gif')
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
@@ -16,11 +17,13 @@ class Speech extends React.Component
         super(props);
         this.state={dialog:"India",
             nlpcontent:'eg:Delhi',
-            data:{}
+            data:{},
+            graph:{}
         };
         
         this.voiceCommands=this.voiceCommands.bind(this);
         this.crossdata=this.crossdata.bind(this);
+        this.SpeechRecog=this.SpeechRecog.bind(this);
     }
     componentDidMount()
     {
@@ -36,13 +39,28 @@ class Speech extends React.Component
                 {
                     console.log(error)
                 })
+
+        axios.get('https://api.covid19india.org/states_daily.json')
+        .then(res=>{
+            this.setState({graph:res.data})
+            console.log(res.data,"daily data")
+        })
+        .catch(error=>
+            {
+                console.log(error)
+            })
    
                          
 }
 componentDidUpdate()
 {
     this.crossdata();
-}    
+} 
+SpeechRecog()
+{
+    document.getElementById("hidden").style.display='none';
+    recognition.stop();
+}   
     
     voiceCommands()
     {
@@ -56,7 +74,7 @@ componentDidUpdate()
         transcript=e.results[current][0].transcript;
         this.setState({nlpcontent:transcript})
         //console.log(transcript);
-        recognition.onend=()=>{console.log("Voice Deactivated");this.getDialog(transcript);document.getElementById("hidden").style.display="none";}
+        recognition.onend=()=>{console.log("Voice Deactivated");this.getDialog(transcript);document.getElementById("hidden").style.display="none";this.setState({nlpcontent:""});}
         recognition.onerror=event=>{console.log(event.error)}
         }
         //console.log(transcript,"final transhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
@@ -78,6 +96,7 @@ componentDidUpdate()
         })
         .catch(error=>
             {console.log(error)})
+
             
            
     }
@@ -134,6 +153,19 @@ componentDidUpdate()
         }
         else state2.filterAll();
         
+        var t=this.state.graph.states_daily
+        var plot=[];
+        if(t!=undefined)
+        {
+            plot=crossfilter(t);
+            console.log(plot.all(),"plot points")
+            var status=plot.dimension(d=>d.status)
+            var an=status.group().reduceSum(d=>d.an);
+            console.log(an.top(1),"group by stae");
+        }
+        
+        
+        
 
 
         
@@ -175,7 +207,10 @@ componentDidUpdate()
         </Grid>
         </Grid>
         {/*<h2 id="interm"></h2>*/}
-        <div id="hidden" style={{display:"none",backgroundColor:'#000000f0',color:"white",position:'absolute',top:'0',height:"100%",width:"100%"}}><div style={{fontSize:'60px',textAlign:'center',display:"flex",justifyContent:"center",marginTop:"300px",}}>{this.state.nlpcontent}</div></div>
+        <div id="hidden" style={{display:"none",backgroundColor:'rgb(26 24 26 / 1)',color:"white",position:'absolute',top:'0',height:"100%",width:"100%"}}>
+            <button style={{position:"absolute",right:"0"}} onClick={this.SpeechRecog}>X</button>
+            <div style={{display:"flex",justifyContent:"center",marginTop:"100px"}}><img src={logo} style={{borderRadius:"50%",border:"0px",height:"400px",width:"400px"}} ></img></div>
+            <div style={{fontSize:'60px',textAlign:'center',display:"flex",justifyContent:"center",}}>{this.state.nlpcontent}</div></div>
         </div>)
 
     }
