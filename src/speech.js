@@ -27,7 +27,7 @@ class Speech extends React.Component
     }
     componentDidMount()
     {
-        axios.get('https://api.covid19india.org/data.json')
+        axios.get('https://data.covid19india.org/data.json')
         .then(res =>
             {
              console.log(res)  
@@ -40,7 +40,7 @@ class Speech extends React.Component
                     console.log(error)
                 })
 
-        axios.get('https://api.covid19india.org/states_daily.json')
+        axios.get('https://data.covid19india.org/states_daily.json')
         .then(res=>{
             this.setState({graph:res.data})
             console.log(res.data,"daily data")
